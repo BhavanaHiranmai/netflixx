@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Netflix Login</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+    <script>
+      function checkEmail() {
+        const email = document.getElementById("loginEmail").value;
+        const msg = document.getElementById("e1");
+
+        if (email === "") {
+          msg.innerText = "Email is required";
+          return;
+        }
+
+        const atIndex = email.indexOf("@");
+        const dotIndex = email.lastIndexOf(".");
+
+        if (
+          atIndex < 1 ||
+          dotIndex < atIndex + 2 ||
+          dotIndex === email.length - 1
+        ) {
+          msg.innerText = "Invalid email format";
+        } else {
+          msg.innerText = "";
+        }
+      }
+
+      function checkPassword() {
+        const pwd = document.getElementById("loginPwd").value;
+        const msg = document.getElementById("e2");
+
+        msg.innerText =
+          pwd.length < 8 ? "Password must be at least 8 characters" : "";
+      }
+
+      function submitLogin(event) {
+        event.preventDefault();
+
+        checkEmail();
+        checkPassword();
+
+        let valid = true;
+
+        const errors = ["e1", "e2"];
+        for (let id of errors) {
+          if (document.getElementById(id).innerText !== "") {
+            valid = false;
+            break;
+          }
+        }
+
+        const finalMsg = document.getElementById("finalMsg");
+
+        if (!valid) {
+          finalMsg.innerText = "Fix errors before logging in";
+          return;
+        }
+
+        finalMsg.innerText = "";
+        alert("Welcome back to Netflix ");
+        event.target.submit();
+      }
+    </script>
+
+    <div class="wrapper">
+      <h3>NETFLIX LOGIN</h3>
+
+      <form onsubmit="submitLogin(event)">
+        <label>Email</label>
+        <input
+          class="inputBox"
+          id="loginEmail"
+          onchange="checkEmail()"
+        />
+        <p id="e1"></p>
+
+        <label>Password</label>
+        <input
+          type="password"
+          class="inputBox"
+          id="loginPwd"
+          onchange="checkPassword()"
+        />
+        <p id="e2"></p>
+
+        <p id="finalMsg"></p>
+
+        <input type="submit" value="SIGN IN" />
+      </form>
+    </div>
+  </body>
+</html>
